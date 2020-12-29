@@ -15,7 +15,7 @@ function App() {
           target="_blank"
           rel="noopener noreferrer"
         >
-          Learn Reactsss
+          Learn React - brand new deploy!
         </a>
         <a
           className="App-link"
