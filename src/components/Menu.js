@@ -1,9 +1,22 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import '../styles/Main.css';
 
 const Menu = (props) => {
 
-    const [isHovered, setIsHovered] = useState(0);
+    const [isHovered, setIsHovered] = useState(Number(localStorage.getItem("ishovered")));
+    const [isActive, setIsActive] = useState(Number(localStorage.getItem("isactive")));
+
+    console.log('Is active: ' + isActive)
+    console.log('Is hovered: ' + isHovered)
+
+    useEffect(() => {
+        localStorage.setItem("isactive", isActive);
+        localStorage.setItem("ishovered", isHovered);
+    }, [isActive, isHovered])
+
+    const isActiveClicked = (passedValue) => {
+        setIsActive(passedValue);
+    }
 
     return (
         <div className="header-and-content header-and-content--one-row-offset">
@@ -22,19 +35,19 @@ const Menu = (props) => {
 
                                         </a>
                                     </li>
-                                    <li onMouseEnter={() => setIsHovered(1)} onMouseLeave={() => setIsHovered(0)} className={'an-primary-links__list-item ' + (isHovered === 1 ? 'an-primary-links__list-item--focus' : '')}>
+                                    <li onClick={() => isActiveClicked(1)} onMouseEnter={() => setIsHovered(1)} onMouseLeave={() => setIsHovered(0)} className={'an-primary-links__list-item ' + (isHovered === 1 || (isActive === 1 && isHovered === 0) ? 'an-primary-links__list-item--focus' : '')}>
                                         <a href="#/home" target="_self" className="an-primary-links__link">
-                                            <span className={"spanClass " + (isHovered === 1 ? 'spanClass--focus' : '')}>Home</span>
+                                            <span className={"spanClass " + (isHovered === 1 || isActive === 1 ? 'spanClass--focus' : '')}>Home</span>
                                         </a>
                                     </li>
-                                    <li onMouseEnter={() => setIsHovered(2)} onMouseLeave={() => setIsHovered(0)} className={"an-primary-links__list-item " + (isHovered === 2 ? 'an-primary-links__list-item--focus' : '')}>
+                                    <li onClick={() => isActiveClicked(2)} onMouseEnter={() => setIsHovered(2)} onMouseLeave={() => setIsHovered(0)} className={"an-primary-links__list-item " + (isHovered === 2 || (isActive === 2 && isHovered === 0) ? 'an-primary-links__list-item--focus' : '')}>
                                         <a href="#/userslist" target="_self" className="an-primary-links__link">
-                                            <span className={"spanClass " + (isHovered === 2 ? 'spanClass--focus' : '')}>Manage users</span>
+                                            <span className={"spanClass " + (isHovered === 2 || isActive === 2 ? 'spanClass--focus' : '')}>Manage users</span>
                                         </a>
                                     </li>
-                                    <li onMouseEnter={() => setIsHovered(3)} onMouseLeave={() => setIsHovered(0)} className={"an-primary-links__list-item " + (isHovered === 3 ? 'an-primary-links__list-item--focus' : '')}>
+                                    <li onClick={() => isActiveClicked(3)} onMouseEnter={() => setIsHovered(3)} onMouseLeave={() => setIsHovered(0)} className={"an-primary-links__list-item " + (isHovered === 3 || (isActive === 3 && isHovered === 0) ? 'an-primary-links__list-item--focus' : '')}>
                                         <a href="#/userslist" target="_self" className="an-primary-links__link">
-                                            <span className={"spanClass " + (isHovered === 3 ? 'spanClass--focus' : '')}>Something else...</span>
+                                            <span className={"spanClass " + (isHovered === 3 || isActive === 3 ? 'spanClass--focus' : '')}>Something else...</span>
                                         </a>
                                     </li>
                                 </ul>
@@ -43,7 +56,7 @@ const Menu = (props) => {
                     </div>
                 </div>
             </header>
-        </div>
+        </div >
     )
 };
 
